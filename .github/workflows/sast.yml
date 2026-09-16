@@ -17,6 +17,12 @@ jobs:
 
             - name:  Run Semgrep SAST
               run: |
-                semgrep scan --config=auto
+                semgrep scan --config=auto --json --output=semgrep-report.json
 
+            - name: Upload Semgrep report
+              if: ${{ always() }}
+              uses: actions/upload-artifact@v4
+              with:
+                name: semgrep-report
+                path: semgrep-report.json
             
