@@ -12,3 +12,12 @@ jobs:
 
             - name: Build Docker image
               run: docker build -t nodegoat:ci .
+
+            - name: Save Docker image
+              run: docker save nodegoat:ci -o nodegoat.tar
+
+            - name: Upload Docker image
+              uses: actions/upload-artifact@v4
+              with:
+                name: nodegoat-image
+                path: nodegoat.tar
