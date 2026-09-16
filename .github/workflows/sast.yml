@@ -1,0 +1,22 @@
+name: SAST
+
+on:
+    workflow_dispatch:
+
+jobs:
+    sast:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v7
+
+            - name:  Install Semgrep
+              run: | 
+                python3 -m pip install semgrep
+
+            - name:  Run Semgrep SAST
+              run: |
+                semgrep scan --config=auto
+
+            
