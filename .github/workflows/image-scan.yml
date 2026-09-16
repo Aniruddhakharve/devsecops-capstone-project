@@ -1,0 +1,50 @@
+name: Image Scan
+
+on:
+  workflow_dispatch:
+    inputs:
+        build-run-id:
+            description: "Docker Build workflow run ID"
+            type: string
+            required: true
+
+jobs:
+    image-scan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v7
+
+            - name: Download Docker image
+              uses: actions/download-artifact@v4
+              with:
+                name: nodegoat-image
+                run-id: ${{ inputs.build-run-id }}
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Load Docker image
+              run: docker load -i nodegoat.tar
+
+            - name: Run Trivy image scan
+              uses: aquasecurity/trivy-action@v0.36.0
+              with:
+                image-ref: nodegoat:ci
+                format: table
+                severity: CRITICAL,HIGH
+                exit-code: 1
+
+            - name: Save Trivy report
+              if: ${{ always() }}
+              run: |
+                trivy image \
+                    --format json \
+                    --output trivy-report.json \
+                    --severity CRITICAL,HIGH \
+                     nodegoat:ci || true
+
+            - name: Upload Trivy report
+              if: ${{ always() }}
+              uses: actions/upload-artifact@v4
+              with:
+                name: trivy-report
+                path: trivy-report.json
