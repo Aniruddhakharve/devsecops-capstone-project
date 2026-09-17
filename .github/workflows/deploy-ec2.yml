@@ -23,6 +23,8 @@ jobs:
                         echo "Docker is not installed"
                         sudo apt update
                         sudo apt install -y docker.io
+                        usermod -aG docker $USER
+                        
                     fi
 
 
