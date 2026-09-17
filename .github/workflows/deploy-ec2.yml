@@ -89,3 +89,20 @@ jobs:
                     cd ~/devops
                     docker compose pull
                     echo "Docker image pulled successfully."
+
+            - name: Start application
+              uses: appleboy/ssh-action@v1.2.2
+              with:
+                host: ${{ secrets.EC2_HOST }}
+                username: ${{ secrets.EC2_USERNAME }}
+                key: ${{ secrets.EC2_SSH_KEY }}
+                script: |
+                    cd ~/devops
+
+                    echo "Stopping existing application..."
+                    docker compose down || echo "No existing application to stop."
+
+                    echo "Starting complete application..."
+                    docker compose up -d --force-recreate
+
+                    echo "Application started successfully. Deployment completed."
