@@ -17,4 +17,8 @@ jobs:
                 username: ${{ secrets.EC2_USERNAME }}
                 key: ${{ secrets.EC2_SSH_KEY }}
                 script: |
-                    docker --version
+                    if command -v docker >/dev/null 2>&1; then
+                        echo "Docker is already installed"
+                    else 
+                        echo "Docker is not installed"
+                    fi
