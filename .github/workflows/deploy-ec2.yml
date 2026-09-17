@@ -21,4 +21,6 @@ jobs:
                         echo "Docker is already installed"
                     else 
                         echo "Docker is not installed"
+                        sudo apt update
+                        sudo apt install -y docker.io
                     fi
