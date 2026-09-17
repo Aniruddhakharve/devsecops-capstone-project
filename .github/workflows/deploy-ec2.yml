@@ -34,3 +34,6 @@ jobs:
                         echo "Docker Compose is not installed"
                          sudo apt install docker-compose-v2 -y
                     fi
+
+                    echo "Creating deployment directory..."
+                    mkdir -p ~/devops
