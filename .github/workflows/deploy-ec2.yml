@@ -23,11 +23,10 @@ jobs:
                         echo "Docker is not installed"
                         sudo apt update
                         sudo apt install -y docker.io
-                        usermod -aG docker $USER
-                        newgrp docker
-
                     fi
 
+                    sudo usermod -aG docker $USER
+                    sudo newgrp docker
 
                     if  docker compose version >/dev/null 2>&1; then
                         echo "Docker compose is already installed"
