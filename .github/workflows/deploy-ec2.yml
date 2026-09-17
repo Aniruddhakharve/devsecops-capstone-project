@@ -46,3 +46,20 @@ jobs:
                 key: ${{ secrets.EC2_SSH_KEY }}
                 source: docker-compose.yml
                 target: ~/devops/
+
+            - name: Create .env file on EC2
+              uses: appleboy/ssh-action@v1.2.2
+              with:
+                host: ${{ secrets.EC2_HOST }}
+                username: ${{ secrets.EC2_USERNAME }}
+                key: ${{ secrets.EC2_SSH_KEY }}
+                script: |
+                    echo "Creating .env file..."
+
+                    cat > ~/devops/.env <<EOF
+                    DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+                    IMAGE_TAG=latest
+                    EOF
+
+                    chmod 600 ~/devops/.env
+                    echo ".env file created successfully."
