@@ -77,3 +77,15 @@ jobs:
                         --username "${{ secrets.DOCKER_USERNAME }}" \
                         --password-stdin
                     echo "Docker Hub login successful."
+
+            - name: Pull Docker image
+              uses: appleboy/ssh-action@v1.2.2
+              with:
+                host: ${{ secrets.EC2_HOST }}
+                username: ${{ secrets.EC2_USERNAME }}
+                key: ${{ secrets.EC2_SSH_KEY }}
+                script: |
+                    echo "Pulling Docker image..."
+                    cd ~/devops
+                    docker compose pull
+                    echo "Docker image pulled successfully."
