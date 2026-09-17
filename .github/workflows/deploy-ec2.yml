@@ -24,3 +24,10 @@ jobs:
                         sudo apt update
                         sudo apt install -y docker.io
                     fi
+                    
+
+                    if  docker compose version >/dev/null 2>&1; then
+                        echo "Docker compose is already installed"
+                    else
+                        echo "Docker Compose is not installed"
+                    fi
