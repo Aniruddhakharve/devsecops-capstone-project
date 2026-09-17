@@ -37,3 +37,12 @@ jobs:
 
                     echo "Creating deployment directory..."
                     mkdir -p ~/devops
+
+            - name: Copy docker-compose.yml
+              uses: appleboy/scp-action@v1
+              with:
+                host: ${{ secrets.EC2_HOST }}
+                username: ${{ secrets.EC2_USERNAME }}
+                key: ${{ secrets.EC2_SSH_KEY }}
+                source: docker-compose.yml
+                target: ~/devops/
