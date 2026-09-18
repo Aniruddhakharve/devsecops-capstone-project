@@ -31,3 +31,9 @@ jobs:
         needs: [sast, secret-scan, dependency-scan, dockerfile-lint]
         uses: ./.github/workflows/docker-build.yml
 
+    image-scan:
+        needs: docker-build
+        uses: ./.github/workflows/image-scan.yml
+        with:
+            build-run-id: ${{ github.run_id }}
+

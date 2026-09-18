@@ -1,7 +1,7 @@
 name: Image Scan
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
         build-run-id:
             description: "Docker Build workflow run ID"
