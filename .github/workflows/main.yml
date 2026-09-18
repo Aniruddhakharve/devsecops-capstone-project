@@ -20,19 +20,19 @@ jobs:
         uses: ./.github/workflows/test.yml
 
     sast:
-        needs: [lint, test]
+        needs: [lint]
         uses: ./.github/workflows/sast.yml
 
     secret-scan:
-        needs: [lint, test]
+        needs: [lint]
         uses: ./.github/workflows/secret-scan.yml
 
     dependency-scan:
-        needs: [lint, test]
+        needs: [lint]
         uses: ./.github/workflows/dependency-scan.yml
 
     dockerfile-lint:
-        needs: [lint, test]
+        needs: [lint]
         uses: ./.github/workflows/dockerfile-lint.yml
 
     docker-build:
