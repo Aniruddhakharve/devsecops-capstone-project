@@ -11,3 +11,7 @@ jobs:
         needs: lint
         uses: ./.github/workflows/test.yml
 
+    sast:
+        needs: [lint, test]
+        uses: ./.github/workflows/sast.yml
+
