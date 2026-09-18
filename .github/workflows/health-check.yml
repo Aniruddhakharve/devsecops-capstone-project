@@ -17,7 +17,7 @@ jobs:
             - name: Check application health
               run: |
                 echo "Checking application health..."
-                curl -f http://${{ secrets.EC2_HOST }}:4000/login
+                curl -fsS http://${{ secrets.EC2_HOST }}:4000/login > /dev/null
                 echo "Application is healthy."
 
             
