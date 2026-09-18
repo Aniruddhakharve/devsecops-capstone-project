@@ -19,3 +19,7 @@ jobs:
         needs: [lint, test]
         uses: ./.github/workflows/secret-scan.yml
 
+    dependency-scan:
+        needs: [lint, test]
+        uses: ./.github/workflows/dependency-scan.yml
+
