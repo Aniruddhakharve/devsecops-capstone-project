@@ -1,0 +1,16 @@
+name: ZAP DAST
+
+on:
+  workflow_dispatch:
+
+jobs:
+    zap-dast:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v7
+
+            - name: Run OWASP ZAP
+              uses: zaproxy/action-full-scan@v0.13.0
+              with:
+                target: http://15.207.89.127:4000
