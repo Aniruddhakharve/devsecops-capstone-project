@@ -2,9 +2,15 @@ name: Docker Build
 
 on:
   workflow_call:
+    outputs:
+      image-tag:
+        description: "Docker image tag"
+        value: ${{ jobs.docker-build.outputs.image-tag }}
 
 jobs:
     docker-build:
+        outputs:
+            image-tag: ${{ steps.meta.outputs.image-tag }}   
         runs-on: ubuntu-latest
         steps:
             - name: checkout code
@@ -12,6 +18,10 @@ jobs:
 
             - name: Build Docker image
               run: docker build -t nodegoat:ci .
+
+            - name: Set image tag
+              id: meta
+              run: echo "image-tag=${{ github.sha }}" >> "$GITHUB_OUTPUT"
 
             - name: Save Docker image
               run: docker save nodegoat:ci -o nodegoat.tar

@@ -1,10 +1,15 @@
 name: Docker Hub Push
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       build-run-id:
         description: "Docker Build workflow run ID"
+        type: string
+        required: true
+
+      image-tag:
+        description: "Docker image tag"
         type: string
         required: true
 
@@ -33,12 +38,12 @@ jobs:
 
             - name: Tag Docker image
               run: |
-                docker tag nodegoat:ci ${{ secrets.DOCKER_USERNAME }}/nodegoat:${{ github.sha }}
+                docker tag nodegoat:ci ${{ secrets.DOCKER_USERNAME }}/nodegoat:${{ inputs.image-tag }}
                 docker tag nodegoat:ci ${{ secrets.DOCKER_USERNAME }}/nodegoat:latest
 
             - name: push Docker image
               run: |
-                docker push ${{ secrets.DOCKER_USERNAME }}/nodegoat:${{ github.sha }}
+                docker push ${{ secrets.DOCKER_USERNAME }}/nodegoat:${{ inputs.image-tag }}
                 docker push ${{ secrets.DOCKER_USERNAME }}/nodegoat:latest
             
             

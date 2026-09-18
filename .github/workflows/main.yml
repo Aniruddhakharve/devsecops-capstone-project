@@ -37,3 +37,11 @@ jobs:
         with:
             build-run-id: ${{ github.run_id }}
 
+    docker-push:
+        needs: [docker-build, image-scan]
+        uses: ./.github/workflows/docker-push.yml
+        with:
+            build-run-id: ${{ github.run_id }}
+            image-tag: ${{ needs.docker-build.outputs.image-tag }}
+        secrets: inherit
+
