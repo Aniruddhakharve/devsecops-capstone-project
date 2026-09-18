@@ -1,6 +1,14 @@
 name: Main Pipeline
 
 on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
   workflow_dispatch:
 
 jobs:
@@ -39,6 +47,7 @@ jobs:
 
     docker-push:
         needs: [docker-build, image-scan]
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: ./.github/workflows/docker-push.yml
         with:
             build-run-id: ${{ github.run_id }}
@@ -47,6 +56,7 @@ jobs:
     
     deploy-ec2:
         needs: [docker-build, docker-push]
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: ./.github/workflows/deploy-ec2.yml
         with:
             image-tag: ${{ needs.docker-build.outputs.image-tag }}
