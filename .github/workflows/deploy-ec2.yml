@@ -1,7 +1,12 @@
 name: Deploy to EC2
 
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      image-tag:
+        description: "Docker image tag to deploy"
+        type: string
+        required: true
     
 jobs:
     deploy:
@@ -58,7 +63,7 @@ jobs:
 
                     cat > ~/devops/.env <<EOF
                     DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
-                    IMAGE_TAG=latest
+                    IMAGE_TAG=${{ inputs.image-tag }}
                     EOF
 
                     chmod 600 ~/devops/.env

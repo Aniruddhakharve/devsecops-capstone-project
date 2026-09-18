@@ -44,4 +44,11 @@ jobs:
             build-run-id: ${{ github.run_id }}
             image-tag: ${{ needs.docker-build.outputs.image-tag }}
         secrets: inherit
+    
+    deploy-ec2:
+        needs: [docker-build, docker-push]
+        uses: ./.github/workflows/deploy-ec2.yml
+        with:
+            image-tag: ${{ needs.docker-build.outputs.image-tag }}
+        secrets: inherit
 
