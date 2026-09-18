@@ -23,3 +23,7 @@ jobs:
         needs: [lint, test]
         uses: ./.github/workflows/dependency-scan.yml
 
+    dockerfile-lint:
+        needs: [lint, test]
+        uses: ./.github/workflows/dockerfile-lint.yml
+
