@@ -27,3 +27,7 @@ jobs:
         needs: [lint, test]
         uses: ./.github/workflows/dockerfile-lint.yml
 
+    docker-build:
+        needs: [sast, secret-scan, dependency-scan, dockerfile-lint]
+        uses: ./.github/workflows/docker-build.yml
+
