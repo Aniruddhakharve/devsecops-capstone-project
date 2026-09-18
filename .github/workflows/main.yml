@@ -62,8 +62,13 @@ jobs:
             image-tag: ${{ needs.docker-build.outputs.image-tag }}
         secrets: inherit
 
-    zap-dast:
+    health-check:
         needs: [deploy-ec2]
+        uses: ./.github/workflows/health-check.yml
+        secrets: inherit
+
+    zap-dast:
+        needs: [health-check]
         uses: ./.github/workflows/zap-dast.yml
         secrets: inherit
 

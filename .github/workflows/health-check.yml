@@ -1,0 +1,23 @@
+name: Health Check
+
+on:
+  workflow_call:
+    secrets:
+      EC2_HOST:
+        required: true
+
+jobs:
+    health-check:
+        runs-on: ubuntu-latest
+        steps:
+
+            - name: checkout code
+              uses: actions/checkout@v7
+
+            - name: Check application health
+              run: |
+                echo "Checking application health..."
+                curl -f http://${{ secrets.EC2_HOST }}:4000/login
+                echo "Application is healthy."
+
+            
