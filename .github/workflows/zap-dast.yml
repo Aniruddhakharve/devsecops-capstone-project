@@ -2,10 +2,8 @@ name: ZAP DAST
 
 on:
   workflow_call:
-    inputs:
-      target:
-        description: "Application URL to scan"
-        type: string
+    secrets:
+      EC2_HOST:
         required: true
 
 jobs:
@@ -18,5 +16,5 @@ jobs:
             - name: Run OWASP ZAP
               uses: zaproxy/action-baseline@v0.15.0
               with:
-                target: ${{ inputs.target }}
+                target: http://${{ secrets.EC2_HOST }}:4000
                 allow_issue_writing: false

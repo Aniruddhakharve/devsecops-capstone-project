@@ -65,7 +65,5 @@ jobs:
     zap-dast:
         needs: [deploy-ec2]
         uses: ./.github/workflows/zap-dast.yml
-        with:
-          target: http://${{ secrets.EC2_HOST }}:4000
         secrets: inherit
 
