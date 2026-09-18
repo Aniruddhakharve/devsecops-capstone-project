@@ -15,3 +15,7 @@ jobs:
         needs: [lint, test]
         uses: ./.github/workflows/sast.yml
 
+    secret-scan:
+        needs: [lint, test]
+        uses: ./.github/workflows/secret-scan.yml
+
